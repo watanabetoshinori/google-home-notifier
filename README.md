@@ -9,13 +9,15 @@ $ npm install google-home-notifier
 #### Usage
 ```javascript
 var googlehome = require('google-home-notifier');
-var language = 'pl'; // if not set 'us' language will be used
+var language = 'ja-JP_EmiVoice'; // if not set 'en-US_MichaelVoice' language will be used
+
+googlehome.tts('<USERNAME>', '<PASSWORD>'); // Change to your Watson API username and password
 
 googlehome.device('Google Home', language); // Change to your Google Home name
 // or if you know your Google Home IP
 // googlehome.ip('192.168.1.20', language);
 
-googlehome.notify('Hey Foo', function(res) {
+googlehome.notify('こんにちは', function(res) {
   console.log(res);
 });
 ```

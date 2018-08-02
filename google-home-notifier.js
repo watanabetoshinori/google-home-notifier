@@ -24,6 +24,12 @@ var accent = function(accent) {
   return this;
 }
 
+var watsontts = require('./watson-tts');
+var tts = function(username, password) {
+  watsontts.auth(username, password);
+  return this;
+}
+
 var notify = function(message, callback) {
   if (!deviceAddress){
     browser.start();
@@ -65,6 +71,15 @@ var play = function(mp3_url, callback) {
 };
 
 var getSpeechUrl = function(text, host, callback) {
+  if (watsontts.isInitialized()) {
+    watsontts.getAudioURL(text, language, function(url) {
+      onDeviceUp(host, url, function(res) {
+        callback(res)
+      });
+    });
+    return;
+  }
+
   googletts(text, language, 1, 1000, googlettsaccent).then(function (url) {
     onDeviceUp(host, url, function(res){
       callback(res)
@@ -106,6 +121,7 @@ var onDeviceUp = function(host, url, callback) {
 
 exports.ip = ip;
 exports.device = device;
+exports.tts = tts;
 exports.accent = accent;
 exports.notify = notify;
 exports.play = play;
